@@ -2,6 +2,7 @@ import { LucideKanban } from 'lucide-react'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import { homePath, ticketsPath } from '@/paths'
+import ThemeSwitcher from './theme/theme-switcher'
 
 export default function Header() {
   return (
@@ -13,7 +14,7 @@ export default function Header() {
         w-full flex py-2.5 px-5 justify-between
         '
     >
-      <div>
+      <div className='flex items-center gap-x-2'>
         <Link
           href={homePath()}
           className={buttonVariants({
@@ -25,7 +26,8 @@ export default function Header() {
           <h1 className='text-lg font-semibold ml-2'>TckT</h1>
         </Link>
       </div>
-      <div>
+      <div className='flex items-center gap-x-2'>
+        <ThemeSwitcher />
         <Link
           href={ticketsPath()}
           className={buttonVariants({ variant: 'default' })}
