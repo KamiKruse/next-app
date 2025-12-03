@@ -12,6 +12,7 @@ type TicketItemProps = {
 }
 
 export default function TicketItem({ ticket, isDetail }: TicketItemProps) {
+  
   const detailButton = (
     <Button asChild variant='outline' size='icon'>
       <Link href={ticketPath(ticket.id)}>
@@ -19,6 +20,7 @@ export default function TicketItem({ ticket, isDetail }: TicketItemProps) {
       </Link>
     </Button>
   )
+  
   return (
     <div
       className={clsx('w-full flex gap-x-1', {
