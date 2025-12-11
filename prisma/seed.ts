@@ -1,22 +1,22 @@
 import 'dotenv/config'
-import { PrismaClient } from '../app/generated/prisma/client'
+import { PrismaClient } from '@/generated/client'
 
 const prisma = new PrismaClient()
 
 const tickets = [
   {
     title: 'Ticket1',
-    content: 'First Ticket',
+    content: 'First Ticket from DB',
     status: 'CLOSED' as const,
   },
   {
     title: 'Ticket2',
-    content: 'Second Ticket',
+    content: 'Second Ticket from DB',
     status: 'OPEN' as const,
   },
   {
     title: 'Ticket3',
-    content: 'Third Ticket',
+    content: 'Third Ticket from DB',
     status: 'IN_PROGRESS' as const,
   },
 ]

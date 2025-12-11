@@ -1,4 +1,4 @@
 export const homePath = () => '/'
 export const ticketsPath = () => '/tickets'
-export const ticketPath = (ticketId: number) => `/tickets/${ticketId}`
+export const ticketPath = (ticketId: string) => `/tickets/${ticketId}`
 
