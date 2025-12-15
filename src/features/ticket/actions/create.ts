@@ -4,9 +4,14 @@ import prisma from '@/lib/prisma'
 import { ticketsPath } from '@/paths'
 
 const createTicket = async (formData: FormData) => {
+  const title = formData.get('title')
+  const content = formData.get('content')
+  if (typeof title !== 'string' || typeof content !== 'string') {
+    throw new Error('Invalid form submission')
+  }
   const data = {
-    title: formData.get('title'),
-    content: formData.get('content'),
+    title,
+    content,
   }
   await prisma.ticket.create({
     data: {

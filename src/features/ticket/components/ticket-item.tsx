@@ -1,17 +1,21 @@
 import clsx from 'clsx'
-import { LucideSquareArrowOutUpRight, LucideTrash } from 'lucide-react'
+import {
+  LucidePencil,
+  LucideSquareArrowOutUpRight,
+  LucideTrash,
+} from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Ticket } from '@/generated/client'
-import { ticketPath } from '@/paths'
+import { editTicketPath, ticketPath } from '@/paths'
 import { handleDelete } from '../actions/delete'
 import { TICKET_ICONS } from '../constants'
 
 type TicketItemProps = {
   ticket: Ticket
   isDetail?: boolean
-} 
+}
 
 export default function TicketItem({ ticket, isDetail }: TicketItemProps) {
   const detailButton = (
@@ -28,6 +32,14 @@ export default function TicketItem({ ticket, isDetail }: TicketItemProps) {
         <LucideTrash className='h-4 w-4' />
       </Button>
     </form>
+  )
+
+  const editButton = (
+    <Button asChild variant='outline' size='icon'>
+      <Link prefetch href={editTicketPath(ticket.id)}>
+        <LucidePencil className='h-4 w-4' />
+      </Link>
+    </Button>
   )
 
   return (
@@ -55,7 +67,15 @@ export default function TicketItem({ ticket, isDetail }: TicketItemProps) {
         </CardContent>
       </Card>
       <div className='flex flex-col gap-y-1'>
-        {isDetail ? deleteButton : detailButton}
+        {isDetail ? (
+          <>
+            {editButton} {deleteButton}
+          </>
+        ) : (
+          <>
+            {detailButton} {editButton}
+          </>
+        )}
       </div>
     </div>
   )
