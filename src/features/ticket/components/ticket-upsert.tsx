@@ -1,4 +1,5 @@
-import { Button } from '@/components/ui/button'
+'use client'
+import { SubmitButton } from '@/components/form/submit-button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -8,6 +9,7 @@ import { upsertTicket } from '../actions/upsert'
 type TicketUpsertProps = {
   ticket?: Ticket
 }
+
 const TicketUpsert = ({ ticket }: TicketUpsertProps) => {
   return (
     <form
@@ -20,7 +22,7 @@ const TicketUpsert = ({ ticket }: TicketUpsertProps) => {
       <Label htmlFor='content'>Title</Label>
       <Textarea id='content' name='content' defaultValue={ticket?.content} />
 
-      <Button type='submit'>{ticket ? " Edit Ticket" : "Create Ticket"}</Button>
+      <SubmitButton label={ticket ? 'Edit Ticket' : 'Create Ticket'} />
     </form>
   )
 }
