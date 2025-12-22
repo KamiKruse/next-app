@@ -11,7 +11,7 @@ export type ErrorToActionStateType = {
 export const EMPTY_ACTION_STATE: ErrorToActionStateType = {
   message: '',
   fieldErrors: {},
-  timeStamp: Date.now(),
+  timeStamp: 0,
 }
 export const fromErrorToActionState = (
   error: unknown,

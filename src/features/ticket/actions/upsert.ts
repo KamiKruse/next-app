@@ -3,7 +3,11 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
-import { ErrorToActionStateType, fromErrorToActionState, toActionState } from '@/components/form/utils/error-to-action-state'
+import {
+  ErrorToActionStateType,
+  fromErrorToActionState,
+  toActionState,
+} from '@/components/form/utils/error-to-action-state'
 import prisma from '@/lib/prisma'
 import { ticketPath, ticketsPath } from '@/paths'
 
@@ -30,6 +34,17 @@ const upsertTicket = async (
       update: data,
       create: data,
     })
+
+    // if (id) {
+    //   await prisma.ticket.update({
+    //     where: { id },
+    //     data,
+    //   })
+    // } else {
+    //   await prisma.ticket.create({
+    //     data,
+    //   })
+    // }
   } catch (error) {
     return fromErrorToActionState(error, formData)
   }
@@ -37,10 +52,8 @@ const upsertTicket = async (
   revalidatePath(ticketsPath())
   if (id) {
     redirect(ticketPath(id))
-  } else {
-    redirect(ticketsPath())
   }
-  return toActionState('SUCCESS',"Ticket created")
+  return toActionState('SUCCESS', 'Ticket created')
 }
 
 export { upsertTicket }

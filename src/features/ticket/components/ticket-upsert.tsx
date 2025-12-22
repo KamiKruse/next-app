@@ -1,6 +1,8 @@
 'use client'
+
 import { useActionState } from 'react'
 import { FieldErrors } from '@/components/form/field-errors'
+import { useActionFeedback } from '@/components/form/hooks/use-action-feedback'
 import { SubmitButton } from '@/components/form/submit-button'
 import { EMPTY_ACTION_STATE } from '@/components/form/utils/error-to-action-state'
 import { Input } from '@/components/ui/input'
@@ -18,8 +20,25 @@ const TicketUpsert = ({ ticket }: TicketUpsertProps) => {
     upsertTicket.bind(null, ticket?.id),
     EMPTY_ACTION_STATE
   )
+
+  useActionFeedback(actionState, {
+    onSuccess: ({ actionState }) => {
+      console.log(actionState.message)
+      // startTransition(async () => {
+      //   await revalidateTickets()
+      // })
+    },
+    onError: ({ actionState }) => {
+      console.log(actionState.message)
+    },
+  })
+
   return (
-    <form action={action} className='flex flex-col gap-y-4'>
+    <form
+      key={actionState.timeStamp}
+      action={action}
+      className='flex flex-col gap-y-4'
+    >
       <Label htmlFor='title'>Title</Label>
       <Input
         id='title'
