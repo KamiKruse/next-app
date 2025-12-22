@@ -27,24 +27,24 @@ const upsertTicket = async (
       content: formData.get('content'),
     })
 
-    await prisma.ticket.upsert({
-      where: {
-        id: id || '',
-      },
-      update: data,
-      create: data,
-    })
+    // await prisma.ticket.upsert({
+    //   where: {
+    //     id: id || '',
+    //   },
+    //   update: data,
+    //   create: data,
+    // })
 
-    // if (id) {
-    //   await prisma.ticket.update({
-    //     where: { id },
-    //     data,
-    //   })
-    // } else {
-    //   await prisma.ticket.create({
-    //     data,
-    //   })
-    // }
+    if (id) {
+      await prisma.ticket.update({
+        where: { id },
+        data,
+      })
+    } else {
+      await prisma.ticket.create({
+        data,
+      })
+    }
   } catch (error) {
     return fromErrorToActionState(error, formData)
   }

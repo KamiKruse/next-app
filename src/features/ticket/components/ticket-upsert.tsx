@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useActionState } from 'react'
 import { FieldErrors } from '@/components/form/field-errors'
 import { useActionFeedback } from '@/components/form/hooks/use-action-feedback'
@@ -16,6 +17,7 @@ type TicketUpsertProps = {
 }
 
 const TicketUpsert = ({ ticket }: TicketUpsertProps) => {
+  // const router = useRouter()
   const [actionState, action] = useActionState(
     upsertTicket.bind(null, ticket?.id),
     EMPTY_ACTION_STATE
@@ -24,9 +26,11 @@ const TicketUpsert = ({ ticket }: TicketUpsertProps) => {
   useActionFeedback(actionState, {
     onSuccess: ({ actionState }) => {
       console.log(actionState.message)
-      // startTransition(async () => {
-      //   await revalidateTickets()
-      // })
+      // if (!ticket) {
+      //   setTimeout(() => {
+      //     router.refresh()
+      //   }, 100)
+      // }
     },
     onError: ({ actionState }) => {
       console.log(actionState.message)

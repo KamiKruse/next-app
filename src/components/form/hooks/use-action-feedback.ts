@@ -17,23 +17,23 @@ const useActionFeedback = (
   const prevTimeStamp = useRef(actionState.timeStamp)
   const isLoaded = useRef(false)
   useEffect(() => {
-    if(!isLoaded.current){
+    if (!isLoaded.current) {
       isLoaded.current = true
       return
     }
     if (actionState.timeStamp !== prevTimeStamp.current) {
       prevTimeStamp.current = actionState.timeStamp
-      if (actionState.message === 'SUCCESS') {
+      if (actionState.status === 'SUCCESS') {
         options.onSuccess?.({ actionState })
       }
-      if (actionState.message === 'ERROR') {
+      if (actionState.status === 'ERROR') {
         options.onError?.({ actionState })
       }
     }
-    // if (actionState.message === 'SUCCESS') {
+    // if (actionState.status === 'SUCCESS') {
     //   options.onSuccess?.({ actionState })
     // }
-    // if (actionState.message === 'ERROR') {
+    // if (actionState.status === 'ERROR') {
     //   options.onError?.({ actionState })
     // }
   }, [actionState, options])
