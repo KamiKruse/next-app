@@ -14,29 +14,20 @@ const useActionFeedback = (
   actionState: ErrorToActionStateType,
   options: UseActionFeedbackOptionsType
 ) => {
-  const prevTimeStamp = useRef(actionState.timeStamp)
-  const isLoaded = useRef(false)
+  const prevTimestamp = useRef(actionState.timeStamp)
+  const isUpdate = prevTimestamp.current !== actionState.timeStamp
   useEffect(() => {
-    if (!isLoaded.current) {
-      isLoaded.current = true
+    if (!isUpdate) {
       return
     }
-    if (actionState.timeStamp !== prevTimeStamp.current) {
-      prevTimeStamp.current = actionState.timeStamp
-      if (actionState.status === 'SUCCESS') {
-        options.onSuccess?.({ actionState })
-      }
-      if (actionState.status === 'ERROR') {
-        options.onError?.({ actionState })
-      }
+    if (actionState.status === 'SUCCESS') {
+      options.onSuccess?.({ actionState })
     }
-    // if (actionState.status === 'SUCCESS') {
-    //   options.onSuccess?.({ actionState })
-    // }
-    // if (actionState.status === 'ERROR') {
-    //   options.onError?.({ actionState })
-    // }
-  }, [actionState, options])
+    if (actionState.status === 'ERROR') {
+      options.onError?.({ actionState })
+    }
+    prevTimestamp.current = actionState.timeStamp
+  }, [isUpdate, actionState, options])
 }
 
 export { useActionFeedback }

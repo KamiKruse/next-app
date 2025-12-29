@@ -1,10 +1,7 @@
-export const dynamic = 'force-dynamic'
-import { Suspense } from 'react'
 import { CardCompact } from '@/components/card-compact'
 import Heading from '@/components/heading'
 import TicketList from '@/features/ticket/components/ticket-list'
 import { TicketUpsert } from '@/features/ticket/components/ticket-upsert'
-import Loading from './[ticketId]/loading'
 
 export default async function TicketsPage() {
   return (
@@ -16,9 +13,10 @@ export default async function TicketsPage() {
         className='w-full max-w-[420px] self-center'
         content={<TicketUpsert />}
       />
-      <Suspense fallback={<Loading />}>
+      <TicketList />
+      {/* <Suspense fallback={<Loading />}>
         <TicketList />
-      </Suspense>
+      </Suspense> */}
     </div>
   )
 }
