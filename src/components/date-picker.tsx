@@ -2,7 +2,7 @@
 
 import { format } from 'date-fns'
 import { LucideCalendar } from 'lucide-react'
-import * as React from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
@@ -17,12 +17,19 @@ type DatePickerProps = {
   defaultValue: string | undefined
 }
 const DatePicker = ({ id, name, defaultValue }: DatePickerProps) => {
-  const [date, setDate] = React.useState<Date | undefined>(
+  const [date, setDate] = useState<Date | undefined>(
     defaultValue ? new Date(defaultValue) : new Date()
   )
+
+  const [open, setOpen] = useState(false)
   const formattedDate = date ? format(date, 'yyyy-MM-dd') : ''
+
+  const handleSelect = (date: Date | undefined) => {
+    setDate(date)
+    setOpen(false)
+  }
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger className='w-full' id={id} asChild>
         <Button
           variant='outline'
@@ -35,7 +42,7 @@ const DatePicker = ({ id, name, defaultValue }: DatePickerProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-auto p-0'>
-        <Calendar mode='single' selected={date} onSelect={setDate} />
+        <Calendar mode='single' selected={date} onSelect={handleSelect} />
       </PopoverContent>
     </Popover>
   )
