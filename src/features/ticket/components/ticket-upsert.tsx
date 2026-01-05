@@ -1,7 +1,7 @@
 'use client'
 
-import { useActionState } from 'react'
-import { DatePicker } from '@/components/date-picker'
+import { useActionState, useRef } from 'react'
+import { DatePicker, imperativeHandleFromDatePicker } from '@/components/date-picker'
 import { FieldErrors } from '@/components/form/field-errors'
 import { Form } from '@/components/form/form'
 import { SubmitButton } from '@/components/form/submit-button'
@@ -23,8 +23,15 @@ const TicketUpsert = ({ ticket }: TicketUpsertProps) => {
     EMPTY_ACTION_STATE
   )
 
+  const dateImperativeHandleRef = useRef<imperativeHandleFromDatePicker>(
+    null
+  ) 
+
+  const handleSuccess = () => {
+    dateImperativeHandleRef.current?.reset()
+  }
   return (
-    <Form action={action} actionState={actionState}>
+    <Form action={action} actionState={actionState} onSuccess = {handleSuccess}>
       <Label htmlFor='title'>Title</Label>
       <Input
         id='title'
@@ -51,24 +58,15 @@ const TicketUpsert = ({ ticket }: TicketUpsertProps) => {
           <Label htmlFor='deadline' className='block mb-4'>
             Deadline
           </Label>
-          {/* <Input
-            id='deadline'
-            name='deadline'
-            type='date'
-            className='inline'
-            defaultValue={
-              (actionState.payload?.get('deadline') as string) ??
-              ticket?.deadline
-            }
-          /> */}
           <DatePicker
-            // key={actionState.timeStamp}
+           
             id='deadline'
             name='deadline'
             defaultValue={
               (actionState.payload?.get('deadline') as string) ??
               ticket?.deadline
             }
+            imperativeHandle={dateImperativeHandleRef}
           />
           <FieldErrors actionState={actionState} name={'deadline'} />
         </div>

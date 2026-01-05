@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import {
+  LucideMoreVertical,
   LucidePencil,
   LucideSquareArrowOutUpRight,
-  LucideTrash,
 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -16,8 +16,8 @@ import {
 import { Ticket } from '@/generated/client'
 import { editTicketPath, ticketPath } from '@/paths'
 import { toCurrency } from '@/utils/currency'
-import { handleDelete } from '../actions/delete'
 import { TICKET_ICONS } from '../constants'
+import { OptionsMenu } from './options-menu'
 
 type TicketItemProps = {
   ticket: Ticket
@@ -33,14 +33,6 @@ export default function TicketItem({ ticket, isDetail }: TicketItemProps) {
     </Button>
   )
 
-  const deleteButton = (
-    <form action={handleDelete.bind(null, ticket.id)}>
-      <Button variant='outline' size='icon'>
-        <LucideTrash className='h-4 w-4' />
-      </Button>
-    </form>
-  )
-
   const editButton = (
     <Button asChild variant='outline' size='icon'>
       <Link prefetch href={editTicketPath(ticket.id)}>
@@ -48,7 +40,16 @@ export default function TicketItem({ ticket, isDetail }: TicketItemProps) {
       </Link>
     </Button>
   )
-
+  const moreOptionsMenu = (
+    <OptionsMenu
+      ticket={ticket}
+      trigger={
+        <Button variant='outline' size='icon'>
+          <LucideMoreVertical className='h-4 w-4' />
+        </Button>
+      }
+    />
+  )
   return (
     <div
       className={clsx('w-full flex gap-x-1', {
@@ -82,7 +83,8 @@ export default function TicketItem({ ticket, isDetail }: TicketItemProps) {
       <div className='flex flex-col gap-y-1'>
         {isDetail ? (
           <>
-            {editButton} {deleteButton}
+            {editButton}
+            {moreOptionsMenu}
           </>
         ) : (
           <>
